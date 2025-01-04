@@ -22,9 +22,8 @@ _____________________________________________________________
 
 ### TO FIX:
 
-- _✅ Date validation_
-- _✅ Spacing_
+- _Private Chats_
+- _Application system_
 - _🕙Implement Partnership button_
-- _✅ Fix 'undefined' user issue_
 
 _____________________________________________________________
