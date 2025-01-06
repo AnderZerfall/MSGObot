@@ -2,6 +2,7 @@ import { Scenes, session } from 'telegraf';
 import { bot } from '../bot.js';
 import { startCommand } from '../commands/start.command.js';
 import { helpCommand } from '../commands/help.command.js';
+import { replyCommand } from '../commands/reply.command.js';
 import { applicationScene } from "../scenes/apply.scene.js";
 import { reviewScene } from "../scenes/review.scene.js";
 import { dialogScene } from "../scenes/dialog.scene.js";
@@ -28,5 +29,6 @@ export const registerActions = () => {
     bot.start(startCommand);
     bot.help(helpCommand);
     bot.command('menu', startCommand);
+    bot.command('reply', replyCommand);
 }
 
