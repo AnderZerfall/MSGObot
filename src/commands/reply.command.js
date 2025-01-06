@@ -14,10 +14,10 @@ export const replyCommand = (async (context) => {
         }
 
         const receiver = context.message.text.split('@')[1];
-        const receiverId = await bot.telegram.getChatId(`@${receiver}`);
+        const receiverId = await bot.telegram.getChat(`@${receiver}`);
 
         await context.reply(`Next messages will be set to ${receiver}`);
-        
+
         await context.scene.enter('DIALOG_SCENE', {
             userId: receiverId,
             username: `@${receiver}`,
