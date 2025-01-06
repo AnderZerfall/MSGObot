@@ -8,6 +8,7 @@ import { dialogScene } from "../scenes/dialog.scene.js";
 import { adminScene } from '../scenes/admin.scene.js';
 import { userScene } from '../scenes/user.scene.js';
 import { faqScene } from '../scenes/faq.scene.js';
+import { requestScene } from '../scenes/request.scene.js';
 
 const scenes = [
     applicationScene,
@@ -15,7 +16,8 @@ const scenes = [
     dialogScene,
     adminScene,
     userScene,
-    faqScene
+    faqScene,
+    requestScene,
 ]
 
 export const registerActions = () => {

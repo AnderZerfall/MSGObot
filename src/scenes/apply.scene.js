@@ -1,6 +1,6 @@
 import { Markup, Scenes } from "telegraf";
 import { questions } from "../api/application.js";
-import { saveUserData } from "../utils/userlog.js";
+import { saveApplication } from "../utils/dbManager.js";
 import { createTimer, proceed } from "../utils/timeout.js";
 import { createApplication } from "../utils/createApplication.js";
 import * as placeholder from "../api/placeholders.js";
@@ -99,7 +99,7 @@ const sendApplication = async (answers, context) => {
 
     if (textMessage) {
       const user = { userId: context.from.id, username: context.from.username };
-      await saveUserData(context, textMessage, new Date());
+      await saveApplication(context, textMessage, new Date());
       await createApplication(user, textMessage);
     }
 

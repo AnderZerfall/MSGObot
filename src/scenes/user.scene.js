@@ -16,6 +16,11 @@ userScene.action('faq', proceed(async (context) => {
     await context.answerCbQuery();
     await context.scene.enter("FAQ_SCENE")
 }));
+
+userScene.action('request', proceed(async (context) => {
+    await context.answerCbQuery();
+    await context.scene.enter("REQUEST_SCENE")
+}));
     
 userScene.enter(async (context) => {
     context.session.timeout = createTimer(context);
@@ -24,6 +29,7 @@ userScene.enter(async (context) => {
         [Markup.button.callback(placeholder.applyButtonText, "apply")],
         [Markup.button.callback(placeholder.partnershipButtonText, "partnership")],
         [Markup.button.callback(placeholder.FAQButtonText, "faq")],
+        [Markup.button.callback(placeholder.RequestButtonText, "request")],
     ])
         
     await context.reply(placeholder.userSceneText(context.from.username), keyboard);

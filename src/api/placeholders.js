@@ -38,6 +38,7 @@ export const userSceneText = (username) => `Чем могу помочь ${usern
 export const applyButtonText = `Вступление в команду`;
 export const partnershipButtonText = `Партнёрство`;
 export const FAQButtonText = `FAQ`;
+export const RequestButtonText = `Запрос`;
 
 // Admin scene placeholder
 

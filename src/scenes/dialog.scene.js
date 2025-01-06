@@ -1,6 +1,7 @@
 import { Markup, Scenes } from "telegraf";
 import { bot, ADMIN } from '../bot.js';
 import * as placeholder from '../api/placeholders.js';
+import { cleanAnsweredApplications } from '../utils/dbManager.js';
 
 export const dialogScene = new Scenes.BaseScene('DIALOG_SCENE');
 
@@ -67,12 +68,13 @@ dialogScene.action('sendCustom', async (context) => {
 
 dialogScene.action('approve2', async (context) => {
     await bot.telegram.sendMessage(context.session.user.userId, placeholder.approve2Text);
-    await enterCustomDialog(context);
+    // await enterCustomDialog(context);
 });
 
 dialogScene.action('approve3', async (context) => {
     await bot.telegram.sendMessage(context.session.user.userId, placeholder.approve3Text);
-    await enterCustomDialog(context);
+    cleanAnsweredApplications(context.session.user.userId);
+    // await enterCustomDialog(context);
     await context.answerCbQuery();
 });
 
@@ -84,7 +86,7 @@ dialogScene.action('wait', async (context) => {
 
 dialogScene.action('requestExamples', async (context) => {
     await bot.telegram.sendMessage(context.session.user.userId, placeholder.requestExamplesText);
-    await enterCustomDialog(context);
+    // await enterCustomDialog(context);
     await context.answerCbQuery();
 });
 
@@ -100,12 +102,14 @@ dialogScene.action('reject', async (context) => {
 
 dialogScene.action('noExamples', async (context) => {
     await bot.telegram.sendMessage(context.session.user.userId, placeholder.rejectExamplesText);
+    cleanAnsweredApplications(context.session.user.userId);
     await context.scene.leave();
     await context.answerCbQuery();
 });
 
 dialogScene.action('notRelevant', async (context) => {
     await bot.telegram.sendMessage(context.session.user.userId, placeholder.rejectRelevantText);
+    cleanAnsweredApplications(context.session.user.userId);
     await context.scene.leave();
     await context.answerCbQuery();
 });
