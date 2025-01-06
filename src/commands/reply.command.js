@@ -19,7 +19,7 @@ export const replyCommand = (async (context) => {
         await context.reply(`Next messages will be set to ${receiver}`);
 
         await context.scene.enter('DIALOG_SCENE', {
-            userId: receiverId,
+            userId: receiverId.id,
             username: `@${receiver}`,
         });
     } catch (error) {
