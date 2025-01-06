@@ -1,5 +1,31 @@
 import { redis } from '../kvClient.js';
 
+
+export const saveUserByUsername = async (userId, username) => {
+    try {
+        const user = {
+            userId,
+            username
+        };
+
+        if (await redis.get(`user:${username}`)) {
+            await redis.del(`user:${username}`)
+        }
+
+        await redis.set(`user:${username}`, JSON.stringify(user));
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+export const getUserByUsername = async (username) => {
+    try {
+        return await redis.get(`user:${username}`);
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
 export const getApplications = async () => {
     const applications = [];
 
@@ -32,8 +58,8 @@ export const saveApplication = async (context, query, date) => {
             date,
         };
 
-        if (redis.get(`applicant:${application.userId}`)) {
-            redis.del(`applicant:${application.userId}`);
+        if (await redis.get(`applicant:${application.userId}`)) {
+            await redis.del(`applicant:${application.userId}`);
         }
     
         await redis.set(`applicant:${application.userId}`, JSON.stringify(application));

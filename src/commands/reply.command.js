@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
-import { bot, ADMIN } from '../bot.js';
+import { ADMIN } from '../bot.js';
+import { getUserByUsername } from '../utils/dbManager.js';
 import * as placeholder from '../api/placeholders.js';
 import * as images from '../img/image.links.js';
 
@@ -14,17 +15,17 @@ export const replyCommand = (async (context) => {
         }
 
         const receiver = context.message.text.split('@')[1];
-        await context.reply(`Next messages will be set to @${receiver}`);
-        const receiverId = await context.telegram.getChat(`@${receiver}`);
+        const receiverId = await getUserByUsername(receiver);
+        context.reply(`Next messages will be set to @${receiver}`);
 
         await context.scene.enter('DIALOG_SCENE', {
             userId: receiverId.id,
-            username: `@${receiver.user.username}`,
+            username: `@${receiver.username}`,
         });
 
     } catch (error) {
         console.log(`Request: ${error.message}`);
-        await context.reply(error.message);
+        context.reply(error.message);
     }
 
     // if (sender === parseInt(process.env.ADMINS)) {
