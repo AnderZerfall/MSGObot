@@ -27,14 +27,4 @@ export const replyCommand = (async (context) => {
         console.log(`Request: ${error.message}`);
         context.reply(error.message);
     }
-
-    // if (sender === parseInt(process.env.ADMINS)) {
-    //    await bot.telegram.sendMessage(context.session.user.userId, placeholder.leftChatText('MSGO'));
-    // }
-
-    // await context.replyWithPhoto(images.avatarImage,
-    //     {
-    //         caption: placeholder.greetingsText(context.from.username),
-    //         parse_mode: 'HTML'
-    //     });
 });

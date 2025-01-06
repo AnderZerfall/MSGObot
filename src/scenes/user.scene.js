@@ -8,18 +8,13 @@ userScene.action('apply', proceed(async (context) => {
     await context.answerCbQuery();
     await context.scene.enter("APPLICATION_SCENE")
 }));
-userScene.action('partnership', proceed(async (context) => {
+userScene.action('request', proceed(async (context) => {
     await context.answerCbQuery();
-    await context.reply(placeholder.errorText)
+    await context.scene.enter("REQUEST_SCENE")
 }));
 userScene.action('faq', proceed(async (context) => {
     await context.answerCbQuery();
     await context.scene.enter("FAQ_SCENE")
-}));
-
-userScene.action('request', proceed(async (context) => {
-    await context.answerCbQuery();
-    await context.scene.enter("REQUEST_SCENE")
 }));
     
 userScene.enter(async (context) => {
