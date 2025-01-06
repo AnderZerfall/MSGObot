@@ -1,31 +1,33 @@
 import { Scenes } from "telegraf";
+import { createTimer, proceed } from "../utils/timeout.js";
 import { bot, ADMIN } from '../bot.js';
 
 export const requestScene = new Scenes.BaseScene('REQUEST_SCENE');
 
-const enterCustomDialog = async (context) => {
-    // context.session.adminId = context.from.id;
-
-    // const customKeyboard = Markup.keyboard([
-    //     [placeholder.endDialogButtonText]
-    // ]);
-
-    // await context.reply(`Your next messages will be sent directly to @${context.session.user.username}`, customKeyboard);
-    // await bot.telegram.sendMessage( context.session.user.userId, placeholder.joinChatText('MSGO'));
+const messageRequest = async (context) => {
     context.reply('Your messages will be sent to MSGO Admin directly');
     context.session.dialogActive = true;
-
-    requestScene.on('message', async (userContext) => {
-        await bot.telegram.sendMessage(ADMIN, `Message from: @${userContext.from.username}\n\n ${userContext.message.text}`);
-    });
 };
 
+requestScene.on('message', async (context) => {
+    if (context.session.dialogActive) {
+        proceed(async () => await bot.telegram.sendMessage(ADMIN, `Message from: @${context.from.username}\n\n ${context.message.text}`));
+    }
+
+    context.session.timeout = createTimer(context);
+});
+
 requestScene.enter(async (context) => {
+    context.session.timeout = createTimer(context);
     context.session.dialogActive = false;
 
-    enterCustomDialog(context);
+    messageRequest(context);
 });
 
 requestScene.leave(async (context) => {
     context.session.dialogActive = false;
+
+    if (context.session?.timeout) {
+        clearTimeout(context.session.timeout);
+    }
 });

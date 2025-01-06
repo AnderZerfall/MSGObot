@@ -12,7 +12,7 @@ dialogScene.on('message', async (context) => {
         if (context.from.id === context.session.adminId) {
             if (context.message.text === placeholder.endDialogButtonText) {
                 await context.reply('Dialog ended', Markup.removeKeyboard());
-                await bot.telegram.sendMessage(context.session.user.userId, placeholder.leftChatText('MSGO'));
+                // await bot.telegram.sendMessage(context.session.user.userId, placeholder.leftChatText('MSGO'));
                 await context.scene.leave();
             } else {
                 await bot.telegram.sendMessage(context.session.user.userId, context.message.text);
@@ -29,16 +29,15 @@ const enterCustomDialog = async (context) => {
     ]);
 
     await context.reply(`Your next messages will be sent directly to @${context.session.user.username}`, customKeyboard);
-    await bot.telegram.sendMessage( context.session.user.userId, placeholder.joinChatText('MSGO'));
-
+    // await bot.telegram.sendMessage( context.session.user.userId, placeholder.joinChatText('MSGO'));
     context.session.dialogActive = true;
 
-    bot.hears(/.*/, async (userContext) => {
-        if (userContext.from.id === context.session.user.userId
-            && context.session.dialogActive) {
-            await bot.telegram.sendMessage(context.session.adminId, `Message from: @${userContext.from.username}\n\n ${userContext.message.text}`);   
-        }
-    });
+    // bot.hears(/.*/, async (userContext) => {
+    //     if (userContext.from.id === context.session.user.userId
+    //         && context.session.dialogActive) {
+    //         await bot.telegram.sendMessage(context.session.adminId, `Message from: @${userContext.from.username}\n\n ${userContext.message.text}`);
+    //     }
+    // });
 };
 
 dialogScene.enter(async (context) => {
@@ -57,7 +56,7 @@ dialogScene.enter(async (context) => {
             [Markup.button.callback(placeholder.warnButtonText, 'warn')],
             [Markup.button.callback(placeholder.customButtonText, 'sendCustom')],
         ]);
-    
+
         await context.reply(`What do you want to say to ${username}`, keyboard);
     }
 });
